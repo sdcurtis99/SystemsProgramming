@@ -33,7 +33,7 @@ insert 6 and arr[3]
 */
 void insertAtIdx(int arr[], int* length, int maxSize, int insert, int index) {
 
-	if ( (arr != NULL) && (length != NULL) && ((*length) >= 0) && (maxSize > (*length)) && (index >= 0) && (index >= (*length)) ) {
+	if ( (arr != NULL) && (length != NULL) && ((*length) >= 0) && (maxSize > (*length)) && (index >= 0) && (index <= (*length)) ) {
 		for(int i = ((*length) - 1); i >= index; i--) {
 			arr[i+1] =  arr[i];
 			if (i == index) {
