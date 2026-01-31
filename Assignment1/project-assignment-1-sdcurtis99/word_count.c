@@ -8,7 +8,7 @@
  */
 
 
-
+:
 /*
  *	ToDo:
  *		Implment wc logic into a function
@@ -21,13 +21,13 @@
 #include <stdio.h>
 #define LENGTH 3
 
-void  wcResults(int* array) {
-
+void  wcResults(int* array, int argc, FILE* fp) {
+	char ch;
 	int inWord = 0;
 	int chars = 0;
 	int lines = 0;
 	int words = 0;
-	while ( (ch = fgetc(fp)) != EOF ) {
+	while( ( (argc == 2 && fp != NULL) ? (ch = fgetc(fp) != EOF) : (scanf("%c", &ch) == 1) ) ) {
 		if (ch = ' ') {
 			inWord = 0;	
 		}
@@ -46,44 +46,17 @@ void  wcResults(int* array) {
 
 int main(int argc, char* argv[])  {
 	
-	char* fileName = argv[1]
-
-	// if proper amount of cml, ie user might have passed a proper file name
-	if (argc == 2) {
-
-		FILE* fp = fopen(fileName, "r");
-
-		if (fp == NULL) {
-			printf("Error opening file given in cml");
-			return -1;
-		}
-	int* resArr =  (int *) malloc(sizeof(int) * LENGTH);
-	wcResults(resArr);
-	printf("/t%d/t%d/t%d %s\n", resArr[0], resArr[1], resArr[2], fileName);	
-	}
-	// logic for stdin since no file name is provided
-	else if (argc = 1) 
-{
-		char ch;
-		int inWord = 0;
-		int chars = 		
-		while (scanf("%c", &ch) == 1) {
-			if (ch = ' ') {
-                                inWord = 0;
-                        }
-                        if ((ch != ' ') && inWord = 0) {
-                                inWord = 1;
-                                word++
-                        }
-                        chars++;
-                        if (ch == '\n') {lines++;}
-		}
-	}
-	// logic for inproper and unhandled number of cml
-	else {
-		printf("Invalid number of command line arguments");
+	if (argc > 2) {
+		printf("Invalid number of cml arguments used in executable call");	
 		return -1;
 	}
-	
+	char* fileName = argv[1]
+	int* resArr =  (int *) malloc(sizeof(int) * LENGTH);
+	wcResults(resArr, argc, fp);
+	printf("/t%d/t%d/t%d %s\n", resArr[0], resArr[1], resArr[2], fileName);	
 	return 1;
 }
+
+
+
+
