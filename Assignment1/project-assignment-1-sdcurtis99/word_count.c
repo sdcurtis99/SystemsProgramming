@@ -19,37 +19,51 @@
  */
 
 #include <stdio.h>
+#define LENGTH 3
+
+void  wcResults(int* array) {
+
+	int inWord = 0;
+	int chars = 0;
+	int lines = 0;
+	int words = 0;
+	while ( (ch = fgetc(fp)) != EOF ) {
+		if (ch = ' ') {
+			inWord = 0;	
+		}
+		if ((ch != ' ') && inWord = 0) {
+			inWord = 1;
+			word++
+		}	
+		chars++;
+		if (ch == '\n') {lines++;}
+	}
+	arr[0] = lines;
+	arr[1] = words;
+	arr[2] = chars;	
+	return 0;
+}
 
 int main(int argc, char* argv[])  {
 	
+	char* fileName = argv[1]
+
 	// if proper amount of cml, ie user might have passed a proper file name
 	if (argc == 2) {
 
-		FILE* fp = fopen(argv[1], "r");
+		FILE* fp = fopen(fileName, "r");
 
 		if (fp == NULL) {
 			printf("Error opening file given in cml");
 			return -1;
 		}
-
-		int inWord = 0;
-		int chars = 0;
-		int lines = 0;
-		int words = 0;
-		while ( (ch = fgetc(fp)) != EOF ) {
-			if (ch = ' ') {
-				inWord = 0;	
-			}
-			if ((ch != ' ') && inWord = 0) {
-				inWord = 1;
-				word++
-			}	
-			chars++;
-			if (ch == '\n') {lines++;}
-		}	
-
+	int* resArr =  (int *) malloc(sizeof(int) * LENGTH);
+	wcResults(resArr);
+	printf("/t%d/t%d/t%d %s\n", resArr[0], resArr[1], resArr[2], fileName);	
+	}
 	// logic for stdin since no file name is provided
-	else if (argc = 1) {
+	else if (argc = 1) 
+{
 		char ch;
 		int inWord = 0;
 		int chars = 		
