@@ -60,7 +60,8 @@ int main(int argc, char* argv[])  {
 	fp ? printf("\t%d\t%d\t%d %s\n", resArr[0], resArr[1], resArr[2], fileName) : printf("\t%d\t%d\t%d\n", resArr[0], resArr[1], resArr[2]);
 	return 1;
 }
-
+//
+//
 
 
 
