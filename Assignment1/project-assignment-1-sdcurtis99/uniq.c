@@ -20,13 +20,13 @@
 #define MAX_LENGTH 8192
 
 
-void uniq(int argc, FILE* fp) {
+void uniq(FILE* fp) {
 	char* buffer = NULL;
 	size_t bufferSize = 0;
 	ssize_t bytesRead = 0;
 	int first = 1;
 	char prevLine[MAX_LENGTH];
-	while ( (argc == 2 && fp != NULL) ? ((bytesRead = getline(&buffer, &bufferSize, fp)) != -1) : ((bytesRead = getline(&buffer, &bufferSize, stdin)) != -1)) {
+	while ( (fp != NULL) ? ((bytesRead = getline(&buffer, &bufferSize, fp)) != -1) : ((bytesRead = getline(&buffer, &bufferSize, stdin)) != -1)) {
 
 		if (first) {
 			printf("%s", buffer);
@@ -60,8 +60,6 @@ int main(int argc, char* argv[]) {
 			return -1;
 		}
 	}
-	uniq(argc, fp); 
+	uniq(fp); 
 	return 1;
 }
-//
-//

@@ -14,15 +14,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#define LENGTH 3
+#define MAX_LENGTH 3
 
-void  wcResults(int resArr[], int argc, FILE* fp) {
+void  wcResults(int resArr[], FILE* fp)  {
 	int ch;
 	int inWord = 0;
 	int chars = 0;
 	int lines = 0;
 	int words = 0;
-	while(((argc == 2 && fp != NULL) ? ((ch = fgetc(fp)) != EOF) : ((ch = fgetc(stdin)) != EOF))) {
+
+	while(((fp != NULL) ? ((ch = fgetc(fp)) != EOF) : ((ch = fgetc(stdin)) != EOF))) {
 		if (ch == ' ' || ch == '\n' || ch == '\t') {
 			inWord = 0;	
 		}
@@ -55,13 +56,11 @@ int main(int argc, char* argv[])  {
 			return -1;
 		}
 	}
-	int resArr[LENGTH];
-	wcResults(resArr, argc, fp);
+	int resArr[MAX_LENGTH];
+	wcResults(resArr, fp);
 	fp ? printf("\t%d\t%d\t%d %s\n", resArr[0], resArr[1], resArr[2], fileName) : printf("\t%d\t%d\t%d\n", resArr[0], resArr[1], resArr[2]);
 	return 1;
 }
-//
-//
 
 
 
