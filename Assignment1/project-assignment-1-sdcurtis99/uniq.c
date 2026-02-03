@@ -18,16 +18,24 @@
 
 /*
  * uniq takes a file pointer and prints all unqiue lines which are nonconseuqtive from wither a file or stdin. 
+ * the function uses two buffers so that consequitve lines can be compared using strcmp
  */
 void uniq(FILE* fp) {
 
+	// flag for first line
 	int first = 1;
+
+	// buffers used to store the current and previous lines
 	char* curBuffer = NULL;
 	char* prevBuffer = NULL;
 	char* tempBuffer;
+
+	// sizes associated with the getline buffers above
 	size_t tBufferSize;
 	size_t pBufferSize = 0;
 	size_t cBufferSize = 0;
+
+	// flasg to track whether the buffers have been allocated
 	int pBufferNull = 1;
 	int cBufferNull = 1;
 
@@ -42,6 +50,7 @@ void uniq(FILE* fp) {
 	while ( (fp != NULL) ? (getline(&curBuffer, &cBufferSize, fp) != -1) : (getline(&curBuffer, &cBufferSize, stdin) != -1) ) {
 
 		// The first line must always be unqiue so handle this case and set the first flag to false.
+		// the currBuffer has been allocated, flip the flag
 		cBufferNull = 0;
 		if (first) {
 			printf("%s", prevBuffer);
@@ -49,20 +58,24 @@ void uniq(FILE* fp) {
 		}
 
 		// For all other lines in the file.
+		// Print only the current line if it is different from the previous line
 		else if ((strcmp(prevBuffer, curBuffer)) != 0) {
 			printf("%s", curBuffer);
 		}
 		 
+
+		// Swap the buffers so the current line become the previosu for next iteration
 		tempBuffer = curBuffer;
 		curBuffer = prevBuffer;
 		prevBuffer = tempBuffer;
 
-		
+		// Swap the buffer sizes so they are associated with the proper buffer in getline
 		tBufferSize = cBufferSize;
 		cBufferSize = pBufferSize;
 		pBufferSize = tBufferSize;
 		
 	}
+	// Free the dynamic mem allocated in getline() only if they were allocaterd
 	if (!cBufferNull) {
 		free(curBuffer);
 	}
@@ -72,11 +85,17 @@ void uniq(FILE* fp) {
 	return;
 }
 
+// Handles the cmnl arguments and file opening if provided, otherwise input will be used from stdin
+//
 int main(int argc, char* argv[]) {
+
+	// ensure no more than a single cml arugment was provided
 	if (argc > 2) {
 		printf("Invalid number of cml arguments used in executable call");
 		return -1;
 	}
+
+	// If a fileName is provided attempt to open it
 	FILE* fp = NULL;
 	char* fileName = NULL;
 	if (argc == 2) {
@@ -87,6 +106,7 @@ int main(int argc, char* argv[]) {
 			return -1;
 		}
 	}
+	// Pass the file pointer for uniq to use
 	uniq(fp); 
-	return 1;
+	return 0;
 }

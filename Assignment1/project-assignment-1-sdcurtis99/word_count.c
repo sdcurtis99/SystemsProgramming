@@ -16,36 +16,50 @@
 #include <stdlib.h>
 #define MAX_LENGTH 3
 
-void  wcResults(int resArr[], FILE* fp)  {
+
+// Reads in characters from a file pointer and computes the
+// number of lines words and characters
+// fp is the file pointer
+// fileName is the name of the file if provided
+
+void  wcResults(FILE* fp, char* fileName)  {
+	// ch is the current character being read
 	int ch;
+	// inWord is a flag indicating if we are currently in a word
 	int inWord = 0;
+	// The following ints store the counts we will later flush to stdout
 	int chars = 0;
 	int lines = 0;
 	int words = 0;
 
+	// If there is a valid file read from it or get input from stdin
 	while(((fp != NULL) ? ((ch = fgetc(fp)) != EOF) : ((ch = fgetc(stdin)) != EOF))) {
+		// If a whitespace is encountered we are no longer in a word, multiples are a single delimiter
 		if (ch == ' ' || ch == '\n' || ch == '\t') {
 			inWord = 0;	
 		}
+		// If not a whitespace char and we are not altready in a word a new word has begun
 		else if (!inWord) {
 			inWord = 1;
 			words++;
-		}	
+		}
+		// increment chars for every char read an inc lines if a new line is present
 		chars++;
 		if (ch == '\n') {lines++;}
 	}
-	resArr[0] = lines;
-	resArr[1] = words;
-	resArr[2] = chars;	
+
+	// Store the results in the array
+	fp ? printf("\t%d\t%d\t%d %s\n", lines, words, chars, fileName) : printf("\t%d\t%d\t%d\n", lines, words, chars);
 	return;
 }
 
 int main(int argc, char* argv[])  {
-	
+	// Ensure no more cml arguments are provided than expected
 	if (argc > 2) {
-		printf("Invalid number of cml arguments used in executable call");	
+		//printf("Invalid number of cml arguments used in executable call");	
 		return -1;
 	}
+	// If a file is provided attempt to open it otherwise stdin will be used once fp is null and passed to wcResults
 	FILE* fp = NULL;
 	char* fileName = NULL; 
 	if (argc == 2) {
@@ -56,9 +70,8 @@ int main(int argc, char* argv[])  {
 			return -1;
 		}
 	}
-	int resArr[MAX_LENGTH];
-	wcResults(resArr, fp);
-	fp ? printf("\t%d\t%d\t%d %s\n", resArr[0], resArr[1], resArr[2], fileName) : printf("\t%d\t%d\t%d\n", resArr[0], resArr[1], resArr[2]);
+	// Compute and display the number of lines words and chars from the provided file pointer
+	wcResults(fp, fileName);
 	return 1;
 }
 
