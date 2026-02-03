@@ -10,38 +10,65 @@
  * Do not use any dynamic memory.
  *
  *
+ *
  */
-#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 
-#define MAX_LENGTH 8192
-
-
+/*
+ * uniq takes a file pointer and prints all unqiue lines which are nonconseuqtive from wither a file or stdin. 
+ */
 void uniq(FILE* fp) {
-	char* buffer = NULL;
-	size_t bufferSize = 0;
-	ssize_t bytesRead = 0;
-	int first = 1;
-	char prevLine[MAX_LENGTH];
-	while ( (fp != NULL) ? ((bytesRead = getline(&buffer, &bufferSize, fp)) != -1) : ((bytesRead = getline(&buffer, &bufferSize, stdin)) != -1)) {
 
+	int first = 1;
+	char* curBuffer = NULL;
+	char* prevBuffer = NULL;
+	char* tempBuffer;
+	size_t tBufferSize;
+	size_t pBufferSize = 0;
+	size_t cBufferSize = 0;
+	int pBufferNull = 1;
+	int cBufferNull = 1;
+
+	// If the fp is not null then use the fileName passed in the cml otherwise read in from stdin
+	// Getline is used once here so that we can use two different buffers one to store prev and curr line for use in strcmp
+	
+	fp != NULL ? (getline(&prevBuffer, &pBufferSize, fp) != -1) : (getline(&prevBuffer, &pBufferSize, stdin) != -1);
+	pBufferNull = 0;
+
+	// If the fp is not null then use the fileName passed in the cml otherwise read in from stdin
+	
+	while ( (fp != NULL) ? (getline(&curBuffer, &cBufferSize, fp) != -1) : (getline(&curBuffer, &cBufferSize, stdin) != -1) ) {
+
+		// The first line must always be unqiue so handle this case and set the first flag to false.
+		cBufferNull = 0;
 		if (first) {
-			printf("%s", buffer);
+			printf("%s", prevBuffer);
 			first = 0;
 		}
-		else if ((strcmp(prevLine, buffer)) != 0) {
-			printf("%s", buffer);
-		}
-		// <= to include the string terminator '\0'
-		for(ssize_t i  = 0; i <= bytesRead; i++) {
-			prevLine[i] = buffer[i];
-		}
 
+		// For all other lines in the file.
+		else if ((strcmp(prevBuffer, curBuffer)) != 0) {
+			printf("%s", curBuffer);
+		}
+		 
+		tempBuffer = curBuffer;
+		curBuffer = prevBuffer;
+		prevBuffer = tempBuffer;
+
+		
+		tBufferSize = cBufferSize;
+		cBufferSize = pBufferSize;
+		pBufferSize = tBufferSize;
+		
 	}
-	free(buffer);
+	if (!cBufferNull) {
+		free(curBuffer);
+	}
+	if(!pBufferNull) {
+		free(prevBuffer);
+	}
 	return;
 }
 

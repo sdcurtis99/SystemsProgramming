@@ -1,5 +1,21 @@
-this line is a dup
-this line is a dup
-this line is not a dup
-this line is not a dup
-this line is a dup
+dentical1
+identical1
+identical1
+single_line
+another_single
+another_single
+different1
+different2
+different3
+repeated_again
+repeated_again
+blank_follows
+
+blank_above
+blank_above
+
+spaces_matter 
+spaces_matter
+	tab_line
+	tab_line
+trailing_newline_test
