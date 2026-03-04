@@ -18,7 +18,7 @@ int main(int argc, char * argv[]) {
     if (argc != 3) {return 1;}
     int fd1 = open(argv[1], O_RDONLY);
     if (fd1 < 0) { perror("Failed to open file1"); exit(1);}
-    int fd2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    int fd2 = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0754);
     if (fd2 < 0) { perror("Failed to open file2"); exit(1);}
 
     // Redirect printf aka stdout to fp2
@@ -29,10 +29,12 @@ int main(int argc, char * argv[]) {
 
     char buffer[100];
     ssize_t bytes_read;
+    // use bytes read so we have the null term exactly after the data we read
     while ((bytes_read = read(fd1, buffer, sizeof(buffer) - 1)) > 0) {
         buffer[bytes_read] = '\0';
         printf("%s", buffer);
     }
     if (bytes_read < 0) {perror("Read failure"); exit(1);}
     close(fd1);
+    return;
 }

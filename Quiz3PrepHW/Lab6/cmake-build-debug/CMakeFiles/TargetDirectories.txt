@@ -1,0 +1,5 @@
+/Users/shannoncurtis/Desktop/Cal Poly/Winter 26/CSC_357/Labs/Lab6/cmake-build-debug/CMakeFiles/evens.dir
+/Users/shannoncurtis/Desktop/Cal Poly/Winter 26/CSC_357/Labs/Lab6/cmake-build-debug/CMakeFiles/odds.dir
+/Users/shannoncurtis/Desktop/Cal Poly/Winter 26/CSC_357/Labs/Lab6/cmake-build-debug/CMakeFiles/f_test.dir
+/Users/shannoncurtis/Desktop/Cal Poly/Winter 26/CSC_357/Labs/Lab6/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/shannoncurtis/Desktop/Cal Poly/Winter 26/CSC_357/Labs/Lab6/cmake-build-debug/CMakeFiles/rebuild_cache.dir
