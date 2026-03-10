@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define PORT 2828
+#define PORT 6165
 
 void handle_request(int nfd)
 {
@@ -22,9 +22,8 @@ void handle_request(int nfd)
 
    while ((num = getline(&line, &size, network)) >= 0)
    {
-      printf("%s", line);
+      write(nfd, line, num);
    }
-
    free(line);
    fclose(network);
 }
